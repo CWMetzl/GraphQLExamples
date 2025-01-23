@@ -1,0 +1,21 @@
+{
+	"devDependencies": {
+		"concurrently": "^9.1.2"
+	},
+	"scripts": {
+		"docker:up": "docker-compose up -d",
+		"docker:down": "docker-compose down",
+		"start": "node start-dev.js",
+		"start:dev": "concurrently \"pnpm --filter products start:dev\" \"pnpm --filter users start:dev\" \"pnpm --filter supergraph start:dev\"",
+		"start:products": "pnpm --filter products start:dev",
+		"start:users": "pnpm --filter users start:dev",
+		"start:supergraph": "pnpm --filter supergraph start:dev",
+		"startinorder": "pnpm start:products && pnpm start:users && pnpm start:supergraph",
+		"stop": "concurrently \"pnpm docker:down\"",
+		"build": "pnpm --filter users build && pnpm --filter products build && pnpm --filter supergraph build",
+		"cleanall": "pnpm --filter users clean && pnpm --filter products clean && pnpm --filter supergraph clean"
+	},
+	"dependencies": {
+		"wait-on": "^8.0.2"
+	}
+}
